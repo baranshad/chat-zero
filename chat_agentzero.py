@@ -9,6 +9,7 @@ Created on Mon Jul 28 21:13:39 2025
 
 import streamlit as st
 import openai
+import os
 #%%
 st.set_page_config(page_title="Chat with ZeroAgent", page_icon="🤖")
 
