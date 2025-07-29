@@ -16,12 +16,9 @@ st.set_page_config(page_title="Chat with ZeroAgent", page_icon="🤖")
 st.title("🤖 AI Agent Chat")
 st.write("Chat with an OpenAI-powered agent. Type a message and press enter.")
 #%%
-api_key = os.getenv("OPENAI_API_KEY")
-if not api_key:
-    st.warning("API key not found. Please set OPENAI_API_KEY as environment variable.")
-    st.stop()
+api_key = st.secrets["openai_api_key"]  # Streamlit secrets 
 
-openai.api_key = openai_api_key
+openai.api_key = api_key
 #%%
 if "messages" not in st.session_state:
     st.session_state["messages"] = [
