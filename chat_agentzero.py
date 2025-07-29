@@ -13,8 +13,8 @@ import os
 #%%
 st.set_page_config(page_title="Chat with ZeroAgent", page_icon="🤖")
 
-st.title("🤖 AI Agent Chat")
-st.write("Chat with an OpenAI-powered agent. Type a message and press enter.")
+st.title("🤖 Agent Zero Chat")
+st.write("Chat with an OpenAI-powered agent Zero. It can teach you how to play stock.")
 #%%
 api_key = st.secrets["openai_api_key"]  # Streamlit secrets 
 client = OpenAI(api_key=api_key)
