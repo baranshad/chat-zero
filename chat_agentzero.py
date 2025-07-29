@@ -8,7 +8,7 @@ Created on Mon Jul 28 21:13:39 2025
 
 
 import streamlit as st
-import openai
+from openai import OpenAI
 import os
 #%%
 st.set_page_config(page_title="Chat with ZeroAgent", page_icon="🤖")
@@ -17,8 +17,8 @@ st.title("🤖 AI Agent Chat")
 st.write("Chat with an OpenAI-powered agent. Type a message and press enter.")
 #%%
 api_key = st.secrets["openai_api_key"]  # Streamlit secrets 
-
-openai.api_key = api_key
+client = OpenAI(api_key=api_key)
+#openai.api_key = api_key
 #%%
 if "messages" not in st.session_state:
     st.session_state["messages"] = [
@@ -37,16 +37,15 @@ if prompt := st.chat_input("Your message"):
 
     
     with st.chat_message("assistant"):
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-4-0613",
             messages=st.session_state["messages"],
             stream=True
         )
         reply = ""
         for chunk in response:
-            delta = chunk.choices[0].delta
-            if "content" in delta:
-                reply += delta.content
+            if chunk.choices[0].delta.content:
+                reply += chunk.choices[0].delta.content
+                st.write(chunk.choices[0].delta.content, end="")
 
-        st.write(reply)
         st.session_state["messages"].append({"role": "assistant", "content": reply})
