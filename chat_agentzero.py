@@ -44,8 +44,9 @@ if prompt := st.chat_input("Your message"):
         )
         reply = ""
         for chunk in response:
-            if chunk.choices[0].delta.content:
-                reply += chunk.choices[0].delta.content
-                st.write(chunk.choices[0].delta.content, end="")
+            delta = chunk.choices[0].delta
+            if "content" in delta:
+                reply += delta.content
 
+        st.write(reply)
         st.session_state["messages"].append({"role": "assistant", "content": reply})
